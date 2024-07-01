@@ -3,6 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import MakeGetRequest from '../api/getApi';
 import { IMAGE_URL } from '../api/backend';
 import { useNavigate } from 'react-router-dom';
+import { Box, Image, SimpleGrid, Text } from '@chakra-ui/react';
 
 function HomePage() {
     const {State, dispatch} = useAppContext()
@@ -29,16 +30,23 @@ function HomePage() {
       
   return (
     <div style={{display: "flex"}}>
-        {character?.characterArr?.results?.map((item)=> {
+        
+                
+                <SimpleGrid templateColumns='repeat(5, 1fr)' gap={4}>
+                {character?.characterArr?.results?.map((item, i)=> {
             const id = getId(item.url)
             let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
             return (
-                <div onClick={() => navigate(`/details/${id}`)}>
-                 <img src = {newUrl} />
-                 <div style={{fontWeight:"bold"}}>{item.name}</div>
-                 </div>
-            )
-        })}
+                   <Box key={i} borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
+                     <Image src={newUrl} alt={item.name} />
+                     <Text mt={2} fontSize="xl" fontWeight="semibold">
+                       {item.name}
+                     </Text>
+                   </Box>
+                 )
+                })}
+               </SimpleGrid>
+            
     </div>
   )
 }
