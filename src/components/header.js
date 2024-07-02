@@ -14,13 +14,14 @@ const Header = () => {
           h="50px"
         />
          <Spacer />
-        <Link href="/" color="white" fontSize="lg" mr={4}>
+        {/* <Link href="/" color="white" fontSize="lg" mr={4}>
           Home
-        </Link>
+        </Link> */}
         <Avatar
           name="Profile"
           src={profileImg}
           size="md"
+          cursor={'pointer'}
         />
       
       </Flex>
