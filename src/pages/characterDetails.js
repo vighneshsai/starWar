@@ -6,6 +6,7 @@ import { IMAGE_URL } from '../api/static';
 import MakeGetCharacterRequest from '../api/getCharactersApi';
 import { Box, Center, Divider, Flex, Heading, Image, Spinner, Text, VStack } from '@chakra-ui/react';
 import Header from '../components/header';
+import Loader from '../components/loader';
 
 function CharacterDetails() {
   const { State, dispatch } = useAppContext()
@@ -15,6 +16,7 @@ function CharacterDetails() {
   const { character } = State;
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     getCharacter();
   }, []);
 
@@ -38,9 +40,7 @@ function CharacterDetails() {
     <VStack spacing={8} background="#F0FFF0">
       <Header />
       {loading ? (
-        <Center h="100vh">
-          <Spinner size="xl" />
-        </Center>
+       <Loader/>
       ) : data &&
 
       <Box
@@ -56,7 +56,7 @@ function CharacterDetails() {
           zIndex: '1',
           boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
         }}
-        width="90%"
+        width="80%"
       >
         <Flex>
           <Box
@@ -88,33 +88,33 @@ function CharacterDetails() {
             </Text>
             <Divider my={2} />
             <Box fontSize="30px" width="100%">
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Height:</Text>
-                <Text >{data.height}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"} fontWeight="bold">Height</Text>
+                <Text textAlign= "start">{data.height}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Mass:</Text>
-                <Text>{data.mass}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"} fontWeight="bold">Mass</Text>
+                <Text textAlign= "start">{data.mass}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Hair Color:</Text>
-                <Text>{data.hair_color}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"} fontWeight="bold">Hair Color</Text>
+                <Text textAlign= "start">{data.hair_color}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Skin Color:</Text>
-                <Text>{data.skin_color}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Skin Color</Text>
+                <Text textAlign= "start">{data.skin_color}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Eye Color:</Text>
-                <Text>{data.eye_color}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Eye Color</Text>
+                <Text textAlign= "start">{data.eye_color}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Birth Year</Text>
-                <Text>{data.birth_year}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Birth Year</Text>
+                <Text textAlign= "start">{data.birth_year}</Text>
               </Flex>
-              <Flex justify="space-around" width="100%">
-                <Text fontWeight="bold">Gender</Text>
-                <Text>{data.gender}</Text>
+              <Flex  width="100%">
+                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Gender</Text>
+                <Text textAlign= "start">{data.gender}</Text>
               </Flex>
             </Box>
           </Box>
@@ -124,7 +124,7 @@ function CharacterDetails() {
 
 
       }
-      {!loading && <Box mt={8} width="90%" borderWidth="1px" p={4}
+      {!loading && <Box mt={8} width="80%" borderWidth="1px" p={4}
         borderRadius="lg"
         overflow="hidden"
         bg={'white'}

@@ -7,11 +7,12 @@ import { Box, Button, Center, Flex, Image, SimpleGrid, Spinner, Text, VStack } f
 import MakeGetCharacterRequest from '../api/getCharactersApi';
 import starWarImage from '../public/star-wars.jpg'
 import Header from '../components/header';
+import Loader from '../components/loader';
 
 function HomePage() {
     const { State, dispatch } = useAppContext()
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState();
+    const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 10;
     const { character } = State;
@@ -30,7 +31,8 @@ function HomePage() {
         if (data?.response?.status != 403) {
             await dispatch({ type: "SET_CHARACTERS_ARRAY", payload: data.result });
             setLoading(false);
-           setTotalPages(Math.ceil(character?.characterArr?.count / itemsPerPage));
+           setTotalPages(Math.ceil(data?.result?.count / itemsPerPage));
+           console.log(Math.ceil(character?.characterArr?.count / itemsPerPage), character?.characterArr?.count)
 
         }
 
@@ -108,9 +110,7 @@ function HomePage() {
           </Text>
           </Box>
             {loading ? (
-                <Center h="100vh">
-                    <Spinner size="xl" />
-                </Center>
+                <Loader/>
             ) :
                 (<SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4}  marginLeft="5%" marginRight= "5%" marginTop="30px" background="white" p={4} >
                     {character?.characterArr?.results?.map((item, i) => {
@@ -149,7 +149,7 @@ function HomePage() {
                     })}
 
                 </SimpleGrid>)}
-            <Flex justify="center" align='center' mt={6}>
+             {!loading && <Flex justify="center" align='center' mt={6}>
                 <Button
                     colorScheme={currentPage === 1 ? 'gray' : 'blue'}
                     variant="solid"
@@ -181,7 +181,7 @@ function HomePage() {
                 >
                     Next
                 </Button>
-            </Flex>
+            </Flex>}
 
         </VStack>
     )

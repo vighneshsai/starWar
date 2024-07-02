@@ -2,6 +2,7 @@
 import React from 'react';
 import { Box, Image, Flex, Spacer, Avatar } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import profileImg from '../public/profile.jpg'
 
 const Header = () => {
   return (
@@ -18,7 +19,7 @@ const Header = () => {
         </Link>
         <Avatar
           name="Profile"
-          src="https://via.placeholder.com/40"
+          src={profileImg}
           size="md"
         />
       
