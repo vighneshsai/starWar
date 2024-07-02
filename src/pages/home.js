@@ -149,7 +149,7 @@ function HomePage() {
                     })}
 
                 </SimpleGrid>)}
-             {!loading && <Flex justify="center" align='center' mt={6}>
+             {!loading && <Flex justify="center" align='center' mt={6} mb={6}>
                 <Button
                     // colorScheme={currentPage === 1 ? 'gray' : 'customPink'}
                     style={{
