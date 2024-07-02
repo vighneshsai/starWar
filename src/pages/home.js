@@ -88,13 +88,13 @@ function HomePage() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     return (
-        <VStack spacing={0} background="#F0FFF0">
+        <VStack spacing={0} >
             <Header />
             <Box
                 w="100%"
                 h="300px"
                 
-                mb={'30px'}
+                
                 bgImage={starWarImage}
                 bgSize="cover"
                 bgPosition="center"
@@ -104,8 +104,9 @@ function HomePage() {
           p={3}
           textAlign="center"
           w={'100%'}
+          bg={"rgb(245, 245, 245)"}
         >
-          <Text fontWeight="bold" fontSize= "50px" >
+          <Text fontWeight="bold" fontFamily= "Roboto" fontSize = "36px" lineHeight="42px" >
             Star War Characters
           </Text>
           </Box>
@@ -114,7 +115,6 @@ function HomePage() {
             ) :
                 (<SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4}  marginLeft="5%" marginRight= "5%" marginTop="30px" background="white" p={4} >
                     {character?.characterArr?.results?.map((item, i) => {
-                        console.log(item)
                         const id = getId(item.url)
                         let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
                         console.log(newUrl)
@@ -151,7 +151,11 @@ function HomePage() {
                 </SimpleGrid>)}
              {!loading && <Flex justify="center" align='center' mt={6}>
                 <Button
-                    colorScheme={currentPage === 1 ? 'gray' : 'blue'}
+                    // colorScheme={currentPage === 1 ? 'gray' : 'customPink'}
+                    style={{
+                        backgroundColor: currentPage === 1 ? 'gray' : 'rgb(248, 68, 100)',
+                        color: 'white', // Ensure text color is readable
+                      }}
                     variant="solid"
                     mr={2}
                     onClick={() => { handlePrevPage() }}
@@ -162,7 +166,7 @@ function HomePage() {
                 <Box 
           borderWidth="1px"
           borderRadius="md"
-          p={3}
+          p={2}
           textAlign="center"
           bg="gray.50"
           boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
@@ -173,7 +177,11 @@ function HomePage() {
           </Text>
         </Box>
                 <Button
-                    colorScheme={currentPage === totalPages ? 'gray' : 'blue'}
+                    // colorScheme={currentPage === totalPages ? 'gray' : 'customPink'}
+                    style={{
+                        backgroundColor: currentPage === totalPages? 'gray' : 'rgb(248, 68, 100)',
+                        color: 'white', // Ensure text color is readable
+                      }}
                     variant="solid"
                     ml={2}
                     onClick={() => { handleNextPage() }}

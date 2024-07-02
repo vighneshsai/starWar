@@ -7,6 +7,7 @@ import MakeGetCharacterRequest from '../api/getCharactersApi';
 import { Box, Center, Divider, Flex, Heading, Image, Spinner, Text, VStack } from '@chakra-ui/react';
 import Header from '../components/header';
 import Loader from '../components/loader';
+import CircularImage from '../components/circularImage.js';
 
 function CharacterDetails() {
   const { State, dispatch } = useAppContext()
@@ -37,7 +38,7 @@ function CharacterDetails() {
   const peopleFilmData = character?.peopleFilm
   let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
   return (
-    <VStack spacing={8} background="#F0FFF0">
+    <VStack  >
       <Header />
       {loading ? (
        <Loader/>
@@ -48,7 +49,8 @@ function CharacterDetails() {
         borderRadius="lg"
         overflow="hidden"
         cursor="pointer"
-        bg={'white'}
+        bg={'rgb(26, 26, 26)'}
+        p={"5% 10% 5% 10%"}
         position="relative"
         _hover={{
           transform: 'scale(1.05)',
@@ -56,68 +58,56 @@ function CharacterDetails() {
           zIndex: '1',
           boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
         }}
-        width="80%"
+        width="100%"
       >
         <Flex>
           <Box
             // flex="1"
             display="flex"
             alignItems="center"
-            justifyContent="center"
-            minW="50%"
+            // justifyContent="center"
+            minW="80%"
             p={4}
           >
-            <Image
-              src={newUrl}
-              alt={data.name}
-              width='100%'
-              onError={(e) => { console.error('Error loading image:', e.nativeEvent.error); }}
-            />
-          </Box>
-          <Box
-            flex="1"
-            p={4}
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            minW="50%"
-          >
-            <Text fontSize="50px" fontWeight="semibold" textAlign="center">
+            <CircularImage src={newUrl} alt="A circular image" size="350px" />
+            <Box>
+            <Text fontWeight="bold" fontFamily= "Roboto" fontSize = "36px" lineHeight="42px" textAlign="center" color={'white'} padding={"10px 0px"}>
               {data.name}
             </Text>
-            <Divider my={2} />
-            <Box fontSize="30px" width="100%">
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"} fontWeight="bold">Height</Text>
+            {/* <Divider my={2} /> */}
+            <Box width="100%" color={"white"} fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" >
+              <Flex  padding={"10px 0px"} width="100%">
+                <Text textAlign= "start"  color= "rgb(179, 179, 179)" width={"150px"}>Height</Text>
                 <Text textAlign= "start">{data.height}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"} fontWeight="bold">Mass</Text>
+              <Flex padding={"10px 0px"}  width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Mass</Text>
                 <Text textAlign= "start">{data.mass}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"} fontWeight="bold">Hair Color</Text>
+              <Flex padding={"10px 0px"}  width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Hair Color</Text>
                 <Text textAlign= "start">{data.hair_color}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Skin Color</Text>
+              <Flex padding={"10px 0px"} width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Skin Color</Text>
                 <Text textAlign= "start">{data.skin_color}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Eye Color</Text>
+              <Flex padding={"10px 0px"} width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Eye Color</Text>
                 <Text textAlign= "start">{data.eye_color}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Birth Year</Text>
+              <Flex padding={"10px 0px"} width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Birth Year</Text>
                 <Text textAlign= "start">{data.birth_year}</Text>
               </Flex>
-              <Flex  width="100%">
-                <Text textAlign= "start" width={"35%"}  fontWeight="bold">Gender</Text>
+              <Flex padding={"10px 0px"} width="100%">
+                <Text textAlign= "start" fontSize= "16px" fontWeight= {400} lineHeight= "24px" letterSpacing= "0.2px" color= "rgb(179, 179, 179)" width={"150px"}>Gender</Text>
                 <Text textAlign= "start">{data.gender}</Text>
               </Flex>
+              </Box>
             </Box>
           </Box>
+          
         </Flex>
 
       </Box>
