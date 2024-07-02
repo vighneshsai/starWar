@@ -91,7 +91,7 @@ function HomePage() {
             <Box
                 w="100%"
                 h="300px"
-                mt={'30px'}
+                
                 mb={'30px'}
                 bgImage={starWarImage}
                 bgSize="cover"
