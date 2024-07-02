@@ -1,10 +1,8 @@
-import { BACKEND_URL } from "./static"
 
-
-function MakeGetRequest ( endPoint,contentType = 'application/json')  {
+function MakeGetCharacterRequest ( url,contentType = 'application/json')  {
     const FetchData = async() => {
         try {
-            let response = await fetch(`${BACKEND_URL}${endPoint}`, {
+            let response = await fetch(url, {
                 method: "GET",
                 
                 headers: {
@@ -32,4 +30,4 @@ function MakeGetRequest ( endPoint,contentType = 'application/json')  {
     
 }
 
-export default MakeGetRequest
+export default MakeGetCharacterRequest
