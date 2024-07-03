@@ -57,7 +57,7 @@ function CharacterDetails() {
   const peopleFilmData = character?.peopleFilm
   let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
   return (
-    <VStack  >
+    <VStack  fontFamily={'Roboto'}>
       <Header />
       {loading ? (
         <Loader />
@@ -84,7 +84,7 @@ function CharacterDetails() {
               <Text fontWeight="bold" fontFamily="Roboto" fontSize="36px" lineHeight="42px" textAlign="start" color={'white'} padding={"10px 0px"}>
                 {data.name}
               </Text>
-              <Box width="100%" color={"white"} fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px"  >
+              <Box width="100%" color={"white"} fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px" fontFamily={'Roboto'}  >
                 <Flex padding={"5px 0px"} width="100%">
                   <Text textAlign="start" color="rgb(179, 179, 179)" width={"150px"}>Height</Text>
                   <Text textAlign="start">{data.height}</Text>
@@ -155,7 +155,7 @@ function CharacterDetails() {
       >
 
         {peopleFilmData && peopleFilmData.length > 0 ? (
-          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4} marginLeft="5%" marginRight="5%" background="white"  >
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4} marginLeft="5%" marginRight="5%" background="white" marginBottom={"30px"}  >
             {peopleFilmData.map((film, i) => {
 
               return (

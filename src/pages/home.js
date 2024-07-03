@@ -151,6 +151,12 @@ function HomePage() {
                         backgroundColor: currentPage === 1 ? 'gray' : 'rgb(248, 68, 100)',
                         color: 'white', // Ensure text color is readable
                     }}
+                    _hover={{
+                        transform: 'scale(1.05)',
+                        transition: 'transform 0.3s ease',
+                        zIndex: '1',
+                        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                    }}
                     variant="solid"
                     mr={2}
                     onClick={() => { handlePrevPage() }}
@@ -164,6 +170,7 @@ function HomePage() {
                     p={2}
                     textAlign="center"
                     bg="gray.50"
+                    
                     boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
                     minWidth="120px"
                 >
@@ -175,6 +182,12 @@ function HomePage() {
                     style={{
                         backgroundColor: currentPage === totalPages ? 'gray' : 'rgb(248, 68, 100)',
                         color: 'white', // Ensure text color is readable
+                    }}
+                    _hover={{
+                        transform: 'scale(1.05)',
+                        transition: 'transform 0.3s ease',
+                        zIndex: '1',
+                        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                     }}
                     variant="solid"
                     ml={2}

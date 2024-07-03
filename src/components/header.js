@@ -3,6 +3,8 @@ import React from 'react';
 import { Box, Image, Flex, Spacer, Avatar } from '@chakra-ui/react';
 import profileImg from '../public/profile.jpg'
 import { useNavigate } from 'react-router-dom';
+import logo from '../public/logo.png'
+
 
 
 const Header = () => {
@@ -13,9 +15,9 @@ const Header = () => {
                 <Image
                     cursor={'pointer'}
                     onClick={() => navigate('/')}
-                    src="https://i.pinimg.com/originals/af/88/44/af8844965ad2573b78e7700595de00ee.png"
+                    src={logo}
                     alt="Star Wars Logo"
-                    h="50px"
+                    h="40px"
                 />
                 <Spacer />
                 <Avatar
