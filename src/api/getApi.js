@@ -1,15 +1,15 @@
 import { BACKEND_URL } from "./static"
 
 
-function MakeGetRequest ( endPoint,contentType = 'application/json')  {
-    const FetchData = async() => {
+function MakeGetRequest(endPoint, contentType = 'application/json') {
+    const FetchData = async () => {
         try {
             let response = await fetch(`${BACKEND_URL}${endPoint}`, {
                 method: "GET",
-                
+
                 headers: {
                     'Content-Type': contentType,
-                    
+
                 }
             })
             if (response.status === 401 || response.status === 403) {
@@ -18,10 +18,9 @@ function MakeGetRequest ( endPoint,contentType = 'application/json')  {
             let result
             if (response.status == 201 || response.status == 200) {
                 result = await response.json();
-                return {result, response}
+                return { result, response }
             }
         } catch (error) {
-            console.log(error)
             return {
                 error,
                 response: null
@@ -29,7 +28,7 @@ function MakeGetRequest ( endPoint,contentType = 'application/json')  {
         }
     }
     return FetchData()
-    
+
 }
 
 export default MakeGetRequest

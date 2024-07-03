@@ -18,17 +18,17 @@ export const characterReducer = (state = characterInitialState, action) => {
             return {
                 ...state,
                 peopleArr: action.payload
-            };    
+            };
         case 'SET_CHARACTER_FILM':
             return {
                 ...state,
                 peopleFilm: [...state.peopleFilm, action.payload]
-            };   
+            };
         case 'SET_CHARACTER_FILM_EMPTY':
             return {
                 ...state,
                 peopleFilm: action.payload
-            };         
+            };
         default: return state
 
     }

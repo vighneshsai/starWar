@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import MakeGetRequest from '../api/getApi';
 import { IMAGE_URL } from '../api/static';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Center, Flex, Image, SimpleGrid, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import MakeGetCharacterRequest from '../api/getCharactersApi';
 import starWarImage from '../public/star-wars.jpg'
 import Header from '../components/header';
@@ -31,8 +31,7 @@ function HomePage() {
         if (data?.response?.status != 403) {
             await dispatch({ type: "SET_CHARACTERS_ARRAY", payload: data.result });
             setLoading(false);
-           setTotalPages(Math.ceil(data?.result?.count / itemsPerPage));
-           console.log(Math.ceil(character?.characterArr?.count / itemsPerPage), character?.characterArr?.count)
+            setTotalPages(Math.ceil(data?.result?.count / itemsPerPage));
 
         }
 
@@ -84,8 +83,6 @@ function HomePage() {
         return parts[parts.length - 2];
 
     }
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     return (
         <VStack spacing={0} >
@@ -93,31 +90,30 @@ function HomePage() {
             <Box
                 w="100%"
                 h="300px"
-                
-                
+
+
                 bgImage={starWarImage}
                 bgSize="cover"
                 bgPosition="center"
                 bgRepeat="no-repeat"
             />
-            <Box 
-          p={3}
-          textAlign="center"
-          w={'100%'}
-          bg={"rgb(245, 245, 245)"}
-        >
-          <Text fontWeight="bold" fontFamily= "Roboto" fontSize = "36px" lineHeight="42px" >
-            Star War Characters
-          </Text>
-          </Box>
+            <Box
+                p={3}
+                textAlign="center"
+                w={'100%'}
+                bg={"rgb(245, 245, 245)"}
+            >
+                <Text fontWeight="bold" fontFamily="Roboto" fontSize="36px" lineHeight="42px" >
+                    Star War Characters
+                </Text>
+            </Box>
             {loading ? (
-                <Loader/>
+                <Loader />
             ) :
-                (<SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4}  marginLeft="5%" marginRight= "5%" marginTop="30px" background="white" p={4} >
+                (<SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4} marginLeft="5%" marginRight="5%" marginTop="30px" background="white" p={4} >
                     {character?.characterArr?.results?.map((item, i) => {
                         const id = getId(item.url)
                         let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
-                        console.log(newUrl)
                         return (
                             <Box onClick={() => { navigate(`/details/${id}`) }} key={i} borderWidth="1px"
                                 borderRadius="lg"
@@ -149,13 +145,12 @@ function HomePage() {
                     })}
 
                 </SimpleGrid>)}
-             {!loading && <Flex justify="center" align='center' mt={6} mb={6}>
+            {!loading && <Flex justify="center" align='center' mt={6} mb={6}>
                 <Button
-                    // colorScheme={currentPage === 1 ? 'gray' : 'customPink'}
                     style={{
                         backgroundColor: currentPage === 1 ? 'gray' : 'rgb(248, 68, 100)',
                         color: 'white', // Ensure text color is readable
-                      }}
+                    }}
                     variant="solid"
                     mr={2}
                     onClick={() => { handlePrevPage() }}
@@ -163,25 +158,24 @@ function HomePage() {
                 >
                     Previous
                 </Button>
-                <Box 
-          borderWidth="1px"
-          borderRadius="md"
-          p={2}
-          textAlign="center"
-          bg="gray.50"
-          boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
-          minWidth="120px"
-        >
-          <Text fontWeight="bold" fontSize="lg">
-            {currentPage} of {totalPages}
-          </Text>
-        </Box>
+                <Box
+                    borderWidth="1px"
+                    borderRadius="md"
+                    p={2}
+                    textAlign="center"
+                    bg="gray.50"
+                    boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
+                    minWidth="120px"
+                >
+                    <Text fontWeight="bold" fontSize="lg">
+                        {currentPage} of {totalPages}
+                    </Text>
+                </Box>
                 <Button
-                    // colorScheme={currentPage === totalPages ? 'gray' : 'customPink'}
                     style={{
-                        backgroundColor: currentPage === totalPages? 'gray' : 'rgb(248, 68, 100)',
+                        backgroundColor: currentPage === totalPages ? 'gray' : 'rgb(248, 68, 100)',
                         color: 'white', // Ensure text color is readable
-                      }}
+                    }}
                     variant="solid"
                     ml={2}
                     onClick={() => { handleNextPage() }}
