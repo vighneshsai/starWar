@@ -35,7 +35,7 @@ function CharacterDetails() {
   ]
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    getCharacter();
+    getCharacter(); // API for fetching charcter
   }, []);
 
   const getCharacter = async () => {
@@ -142,9 +142,11 @@ function CharacterDetails() {
         pl={"5%"}
         w={'100%'}
       >
-        {!loading && <Text fontWeight={700} fontFamily="Roboto" fontSize="24px" lineHeight="30px" >
+        {!loading &&
+         <Text fontWeight={700} fontFamily="Roboto" fontSize="24px" lineHeight="30px" >
           Film List
-        </Text>}
+        </Text>
+        }
       </Box>
       {!loading && <Box width="100%"
         borderRadius="lg"

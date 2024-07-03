@@ -22,7 +22,7 @@ function HomePage() {
 
 
     useEffect(() => {
-        getCharacters();
+        getCharacters(); // API for fetching all character
     }, []);
 
     const getCharacters = async () => {
@@ -53,7 +53,6 @@ function HomePage() {
 
             } catch (error) {
                 setLoading(false);
-                console.error('Error:', error);
             }
         }
     };
@@ -72,7 +71,6 @@ function HomePage() {
 
             } catch (error) {
                 setLoading(false);
-                console.error('Error:', error);
             }
         }
 
@@ -115,7 +113,9 @@ function HomePage() {
                         const id = getId(item.url)
                         let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
                         return (
-                            <Box onClick={() => { navigate(`/details/${id}`) }} key={i} borderWidth="1px"
+                            <Box
+                                onClick={() => { navigate(`/details/${id}`) }}
+                                key={i} borderWidth="1px"
                                 borderRadius="lg"
                                 overflow="hidden"
                                 cursor="pointer"
@@ -125,7 +125,8 @@ function HomePage() {
                                     transition: 'transform 0.3s ease',
                                     zIndex: '1',
                                     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                                }}>
+                                }}
+                            >
                                 <Image src={newUrl} alt={item.name} onError={(e) => { console.error('Error loading image:', e.nativeEvent.error) }} />
                                 <Box
                                     position="absolute"
@@ -170,7 +171,7 @@ function HomePage() {
                     p={2}
                     textAlign="center"
                     bg="gray.50"
-                    
+
                     boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
                     minWidth="120px"
                 >
