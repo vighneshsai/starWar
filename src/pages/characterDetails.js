@@ -74,34 +74,30 @@ function CharacterDetails() {
       >
         <Flex direction={{ base: 'column', md: 'row' }}>
           <Box
-            // flex="1"
             display="flex"
             flexDirection={{ base: 'column', md: 'row' }}
             alignItems="center"
-            // justifyContent="center"
             minW="80%"
-            p={4}
           >
             <CircularImage src={newUrl} alt="A circular image" size="250px" />
             <Box>
-              <Text fontWeight="bold" fontFamily="Roboto" fontSize="36px" lineHeight="42px" textAlign="center" color={'white'} padding={"10px 0px"}>
+              <Text fontWeight="bold" fontFamily="Roboto" fontSize="36px" lineHeight="42px" textAlign="start" color={'white'} padding={"10px 0px"}>
                 {data.name}
               </Text>
-              {/* <Divider my={2} /> */}
-              <Box width="100%" color={"white"} fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px" >
-                <Flex padding={"10px 0px"} width="100%">
+              <Box width="100%" color={"white"} fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px"  >
+                <Flex padding={"5px 0px"} width="100%">
                   <Text textAlign="start" color="rgb(179, 179, 179)" width={"150px"}>Height</Text>
                   <Text textAlign="start">{data.height}</Text>
                 </Flex>
-                <Flex padding={"10px 0px"} width="100%">
+                <Flex padding={"5px 0px"} width="100%">
                   <Text textAlign="start" fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px" color="rgb(179, 179, 179)" width={"150px"}>Mass</Text>
                   <Text textAlign="start">{data.mass}</Text>
                 </Flex>
-                <Flex padding={"10px 0px"} width="100%">
+                <Flex padding={"5px 0px"} width="100%">
                   <Text textAlign="start" fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px" color="rgb(179, 179, 179)" width={"150px"}>Hair Color</Text>
                   <Text textAlign="start">{data.hair_color}</Text>
                 </Flex>
-                <Flex padding={"10px 0px"} width="100%">
+                <Flex padding={"5px 0px"} width="100%">
                   <Text textAlign="start" fontSize="16px" fontWeight={400} lineHeight="24px" letterSpacing="0.2px" color="rgb(179, 179, 179)" width={"150px"}>Skin Color</Text>
                   <Text textAlign="start">{data.skin_color}</Text>
                 </Flex>
@@ -140,15 +136,15 @@ function CharacterDetails() {
 
         </Box>
       }
-      <Divider pl={"5%"} pr={"5%"} m={"10px 5% 0 5%"} width={"80%"} />
+      <Divider pl={"5%"} pr={"5%"} m={"10px 5% 0 5%"} width={"80%"} opacity={"1px"} />
       <Box
         p={3}
         pl={"5%"}
         w={'100%'}
       >
-        <Text fontWeight={700} fontFamily="Roboto" fontSize="24px" lineHeight="30px" >
+        {!loading && <Text fontWeight={700} fontFamily="Roboto" fontSize="24px" lineHeight="30px" >
           Film List
-        </Text>
+        </Text>}
       </Box>
       {!loading && <Box width="100%"
         borderRadius="lg"
