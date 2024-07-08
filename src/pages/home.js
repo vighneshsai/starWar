@@ -3,12 +3,12 @@ import { useAppContext } from '../context/AppContext';
 import MakeGetRequest from '../api/getApi';
 import { IMAGE_URL } from '../api/static';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Flex, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import MakeGetCharacterRequest from '../api/getCharactersApi';
 import starWarImage from '../public/star-wars.jpg'
 import Header from '../components/header';
 import Loader from '../components/loader';
-// import { FaHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
 function HomePage() {
     const { State, dispatch } = useAppContext()
@@ -153,16 +153,18 @@ function HomePage() {
                                 <Box
                                     position="absolute"
                                     bottom="0"
+                                    alignItems="center"
                                     w="100%"
                                     textAlign="center"
                                     bg="blackAlpha.700"
+                                    display={"flex"}
                                     color="white"
                                     p={2}
                                 >
                                     <Text fontSize="xl" fontWeight="semibold">
                                         {item.name}
                                     </Text>
-                                    {/* <Box
+                                     <Box
                                     as={FaHeart}
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -170,10 +172,10 @@ function HomePage() {
                                     }}
                                     color={isFavorite ? 'red.500' : 'white'}
                                     position="absolute"
-                                    top="5px"
-                                    right="5px"
+                                    top="15px"
+                                    right="8px"
                                     cursor="pointer"
-                                /> */}
+                                /> 
                                 </Box>
                             </Box>
                         )
