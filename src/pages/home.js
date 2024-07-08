@@ -16,7 +16,7 @@ function HomePage() {
     const [totalPages, setTotalPages] = useState(0);
     const [favorites, setFavorites] = useState(() => {
         const savedFavorites = localStorage.getItem('favorites');
-        return savedFavorites ? JSON.parse(savedFavorites) : [];
+        return savedFavorites ? JSON.parse(savedFavorites).sort((a, b) => a - b) : [];
     });
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 10;
@@ -27,7 +27,9 @@ function HomePage() {
 
 
     useEffect(() => {
-        getCharacters(); // API for fetching all character
+        localStorage.getItem("isFavorites") == "true" ?
+            viewFavorites() :
+            getCharacters(); // API for fetching all character
     }, []);
 
     const getCharacters = async () => {
@@ -87,6 +89,35 @@ function HomePage() {
 
     }
 
+    const viewFavorites = async () => {
+        const favCharacterList = []
+        var sortList
+        setLoading(true)
+        localStorage.setItem('isFavorites', 'true');
+        try {
+            // Use Promise.all to ensure all async requests are handled properly
+            await Promise.all(favorites.map(async (id) => {
+                const data = await MakeGetRequest(`/people/${id}`);
+                favCharacterList.push(data?.result);
+                sortList = favCharacterList.sort((a, b) => {
+                    const idA = parseInt(a.url.match(/\/people\/(\d+)\//)[1]);
+                    const idB = parseInt(b.url.match(/\/people\/(\d+)\//)[1]);
+                    return idA - idB;
+                });
+            }));
+            await dispatch({ type: "SET_CHARACTERS_ARRAY", payload: { results: sortList ? sortList : [] } });
+        } catch (error) {
+            console.error("Error fetching favorite characters:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const viewAll = () => {
+        localStorage.setItem('isFavorites', 'false');
+        getCharacters();
+    }
+
     const toggleFavorite = (id) => {
         let updatedFavorites;
         if (favorites.includes(id)) {
@@ -94,14 +125,15 @@ function HomePage() {
         } else {
             updatedFavorites = [...favorites, id];
         }
-        setFavorites(updatedFavorites);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        let sortUpdatedFav = updatedFavorites?.sort((a, b) => a - b);
+        setFavorites(sortUpdatedFav);
+        localStorage.setItem('favorites', JSON.stringify(sortUpdatedFav));
     };
 
     useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+        let sortUpdatedFav = favorites?.sort((a, b) => a - b);
+        localStorage.setItem('favorites', JSON.stringify(sortUpdatedFav));
     }, [favorites]);
-
 
     return (
         <VStack spacing={0} >
@@ -126,63 +158,86 @@ function HomePage() {
                     Star War Characters
                 </Text>
             </Box>
+            {!loading && (
+                <Box width={'100%'} mt={"20px"} display={"flex"} mr={"10%"} p={4} spacing={4} justifyContent={'end'}>
+                    <Button
+                        style={{
+                            backgroundColor: 'rgb(248, 68, 100)',
+                            color: 'white', // Ensure text color is readable
+                        }}
+                        _hover={{
+                            transform: 'scale(1.05)',
+                            transition: 'transform 0.3s ease',
+                            zIndex: '1',
+                            boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                        }}
+                        variant="solid"
+                        ml={2}
+                        onClick={() => { localStorage.getItem("isFavorites") == "true" ? viewAll() : viewFavorites() }}
+                    >
+                        {localStorage.getItem("isFavorites") == "true" ? "View All" : "View Favorites"}
+                    </Button>
+                </Box>
+            )}
             {loading ? (
                 <Loader />
             ) :
-                (<SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4} marginLeft="5%" marginRight="5%" marginTop="30px" background="white" p={4} >
-                    {character?.characterArr?.results?.map((item, i) => {
-                        const id = getId(item.url)
-                        let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
-                        const isFavorite = favorites.includes(id);
-                        return (
-                            <Box
-                                onClick={() => { navigate(`/details/${id}`) }}
-                                key={i} borderWidth="1px"
-                                borderRadius="lg"
-                                overflow="hidden"
-                                cursor="pointer"
-                                position="relative"
-                                _hover={{
-                                    transform: 'scale(1.05)',
-                                    transition: 'transform 0.3s ease',
-                                    zIndex: '1',
-                                    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                                }}
-                            >
-                                <Image src={newUrl} alt={item.name} onError={(e) => { console.error('Error loading image:', e.nativeEvent.error) }} />
+                (character?.characterArr?.results?.length == 0 ?
+                    <Box mt={'40px'} fontWeight="bold" fontFamily="Roboto" fontSize="24px" lineHeight="30px" >No Favorites Available </Box>
+                    : <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4} marginLeft="5%" marginRight="5%" marginTop="30px" background="white" p={4} >
+                        {character?.characterArr?.results?.map((item, i) => {
+                            const id = getId(item.url)
+                            let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
+                            const isFavorite = favorites.includes(id);
+                            return (
                                 <Box
-                                    position="absolute"
-                                    bottom="0"
-                                    alignItems="center"
-                                    w="100%"
-                                    textAlign="center"
-                                    bg="blackAlpha.700"
-                                    display={"flex"}
-                                    color="white"
-                                    p={2}
+                                    onClick={() => { navigate(`/details/${id}`) }}
+                                    key={i} borderWidth="1px"
+                                    borderRadius="lg"
+                                    overflow="hidden"
+                                    cursor="pointer"
+                                    position="relative"
+                                    _hover={{
+                                        transform: 'scale(1.05)',
+                                        transition: 'transform 0.3s ease',
+                                        zIndex: '1',
+                                        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                                    }}
                                 >
-                                    <Text fontSize="xl" w= {"87%"}fontWeight="semibold">
-                                        {item.name}
-                                    </Text>
+                                    <Image src={newUrl} alt={item.name} onError={(e) => { console.error('Error loading image:', e.nativeEvent.error) }} />
                                     <Box
-                                        as={FaHeart}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleFavorite(id);
-                                        }}
-                                        color={isFavorite ? 'red.500' : 'white'}
                                         position="absolute"
-                                        top="15px"
-                                        right="8px"
-                                        cursor="pointer"
-                                    />
+                                        bottom="0"
+                                        alignItems="center"
+                                        w="100%"
+                                        textAlign="center"
+                                        bg="blackAlpha.700"
+                                        display={"flex"}
+                                        color="white"
+                                        p={2}
+                                    >
+                                        <Text fontSize="xl" w={"87%"} fontWeight="semibold">
+                                            {item.name}
+                                        </Text>
+                                        <Box
+                                            as={FaHeart}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleFavorite(id);
+                                            }}
+                                            color={isFavorite ? 'red.500' : 'white'}
+                                            position="absolute"
+                                            top="15px"
+                                            right="8px"
+                                            cursor="pointer"
+                                        />
+                                    </Box>
                                 </Box>
-                            </Box>
-                        )
-                    })}
+                            )
+                        })}
 
-                </SimpleGrid>)}
-            {!loading && <Flex justify="center" align='center' mt={6} mb={6}>
+                    </SimpleGrid>)}
+            {!loading && localStorage.getItem('isFavorites') != "true" && <Flex justify="center" align='center' mt={6} mb={6}>
                 <Button
                     style={{
                         backgroundColor: currentPage === 1 ? 'gray' : 'rgb(248, 68, 100)',
