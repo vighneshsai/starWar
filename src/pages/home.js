@@ -161,21 +161,21 @@ function HomePage() {
                                     color="white"
                                     p={2}
                                 >
-                                    <Text fontSize="xl" fontWeight="semibold">
+                                    <Text fontSize="xl" w= {"87%"}fontWeight="semibold">
                                         {item.name}
                                     </Text>
-                                     <Box
-                                    as={FaHeart}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        toggleFavorite(id);
-                                    }}
-                                    color={isFavorite ? 'red.500' : 'white'}
-                                    position="absolute"
-                                    top="15px"
-                                    right="8px"
-                                    cursor="pointer"
-                                /> 
+                                    <Box
+                                        as={FaHeart}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleFavorite(id);
+                                        }}
+                                        color={isFavorite ? 'red.500' : 'white'}
+                                        position="absolute"
+                                        top="15px"
+                                        right="8px"
+                                        cursor="pointer"
+                                    />
                                 </Box>
                             </Box>
                         )
