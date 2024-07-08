@@ -8,11 +8,16 @@ import MakeGetCharacterRequest from '../api/getCharactersApi';
 import starWarImage from '../public/star-wars.jpg'
 import Header from '../components/header';
 import Loader from '../components/loader';
+// import { FaHeart } from 'react-icons/fa';
 
 function HomePage() {
     const { State, dispatch } = useAppContext()
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [favorites, setFavorites] = useState(() => {
+        const savedFavorites = localStorage.getItem('favorites');
+        return savedFavorites ? JSON.parse(savedFavorites) : [];
+    });
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 10;
     const { character } = State;
@@ -82,6 +87,22 @@ function HomePage() {
 
     }
 
+    const toggleFavorite = (id) => {
+        let updatedFavorites;
+        if (favorites.includes(id)) {
+            updatedFavorites = favorites.filter(favId => favId !== id);
+        } else {
+            updatedFavorites = [...favorites, id];
+        }
+        setFavorites(updatedFavorites);
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    };
+
+    useEffect(() => {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }, [favorites]);
+
+
     return (
         <VStack spacing={0} >
             <Header />
@@ -112,6 +133,7 @@ function HomePage() {
                     {character?.characterArr?.results?.map((item, i) => {
                         const id = getId(item.url)
                         let newUrl = IMAGE_URL.replace(/\/\d+\.jpg$/, `/${id}.jpg`);
+                        const isFavorite = favorites.includes(id);
                         return (
                             <Box
                                 onClick={() => { navigate(`/details/${id}`) }}
@@ -140,6 +162,18 @@ function HomePage() {
                                     <Text fontSize="xl" fontWeight="semibold">
                                         {item.name}
                                     </Text>
+                                    {/* <Box
+                                    as={FaHeart}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleFavorite(id);
+                                    }}
+                                    color={isFavorite ? 'red.500' : 'white'}
+                                    position="absolute"
+                                    top="5px"
+                                    right="5px"
+                                    cursor="pointer"
+                                /> */}
                                 </Box>
                             </Box>
                         )
